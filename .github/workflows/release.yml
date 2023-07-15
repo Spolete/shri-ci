@@ -33,3 +33,13 @@ jobs:
 
       - name: Build
         run: npm run build
+
+      - name: Create Release Issue
+        run: node .github/actions/create-release-issue.js
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_repo: ${{ github.repository }}
+          github_actor: ${{ github.actor }}
+          github_ref_name: ${{ github.ref_name }}
