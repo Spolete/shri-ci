@@ -5,10 +5,10 @@ interface GithubIssueResponse {
     number: number;
 }
 
-const token = core.getInput('github_token');
-const repo = core.getInput('github_repo');
-const actor = core.getInput('github_actor');
-const version = core.getInput('github_ref_name');
+const token = process.env.GITHUB_TOKEN;
+const repo = process.env.GITHUB_REPOSITORY;
+const actor = process.env.GITHUB_ACTOR;
+const version = process.env.GITHUB_REF_NAME;
 
 const headers = {
     Authorization: `token ${token}`,

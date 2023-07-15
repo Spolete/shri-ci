@@ -2,10 +2,10 @@
 exports.__esModule = true;
 var node_fetch_1 = require("node-fetch");
 var core = require("@actions/core");
-var token = core.getInput('github_token');
-var repo = core.getInput('github_repo');
-var actor = core.getInput('github_actor');
-var version = core.getInput('github_ref_name');
+var token = process.env.GITHUB_TOKEN;
+var repo = process.env.GITHUB_REPOSITORY;
+var actor = process.env.GITHUB_ACTOR;
+var version = process.env.GITHUB_REF_NAME;
 var headers = {
     Authorization: "token ".concat(token),
     Accept: 'application/vnd.github.v3+json'
