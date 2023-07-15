@@ -24,7 +24,7 @@ export const TodoList: FC = () => {
     <div>
       <div>
         <input data-testid="input-add" value={text} onChange={onChange} />
-        <button data-testid="button-add">
+        <button data-testid="button-add" onClick={onClick}>
           Добавить
         </button>
       </div>
