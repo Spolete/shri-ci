@@ -6,10 +6,11 @@ const repo = process.env.GITHUB_REPOSITORY;
 const actor = process.env.GITHUB_ACTOR;
 const version = process.env.GITHUB_REF_NAME;
 const runId = process.env.GITHUB_RUN_ID;
+const changelog = process.env.CHANGELOG;
 
 // The URL to the current workflow run
 const workflowURL = `https://github.com/${repo}/actions/runs/${runId}`;
-const releaseBrunchURL = `https://github.com/${repo}/tree/release/${version}`
+const releaseBranchURL = `https://github.com/${repo}/tree/release/${version}`
 
 const headers = {
   Authorization: `token ${token}`,
@@ -52,7 +53,7 @@ fetch(`https://api.github.com/repos/${repo}/issues?state=all`, {
         - [Release Branch](${releaseBranchURL})
 
         ### Changelog
-        _Add Changelog Here_
+        ${changelog}
       `;
 
       fetch(`https://api.github.com/repos/${repo}/issues`, {

@@ -28,6 +28,14 @@ jobs:
       - name: Install
         run: npm ci
 
+      - name: Generate Changelog
+        id: changelog
+        run: |
+          PREV_TAG=$(git describe --abbrev=0 --tags `git rev-list --tags --skip=1 --max-count=1`)
+          CHANGELOG=$(git log --pretty=format:"- %s" $PREV_TAG..HEAD)
+          echo "::set-output name=changelog::$CHANGELOG"
+          echo "CHANGELOG=$CHANGELOG" >> $GITHUB_ENV
+
       - name: Create Release Issue
         run: node .github/actions/create-release-issue.mjs
         env:
@@ -36,6 +44,7 @@ jobs:
           GITHUB_ACTOR: ${{ github.actor }}
           GITHUB_REF_NAME: ${{ github.ref_name }}
           GITHUB_RUN_ID: ${{ github.run_id }}
+          CHANGELOG: ${{ env.CHANGELOG }}
 
       - name: Run tests
         run: npm run test-ci
