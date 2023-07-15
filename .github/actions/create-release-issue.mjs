@@ -9,6 +9,7 @@ const runId = process.env.GITHUB_RUN_ID;
 
 // The URL to the current workflow run
 const workflowURL = `https://github.com/${repo}/actions/runs/${runId}`;
+const releaseBrunchURL = `https://github.com/${repo}/tree/release/${version}`
 
 const headers = {
   Authorization: `token ${token}`,
@@ -26,7 +27,8 @@ fetch(`https://api.github.com/repos/${repo}/issues?state=all`, {
     if (releaseIssue) {
       // If it exists, add a comment
       const commentBody = `
-        New run of workflow.\n- Author: ${actor}
+        New run of workflow:
+        - Author: **${actor}**
         - [Workflow Run](${workflowURL})
       `;
       fetch(`https://api.github.com/repos/${repo}/issues/${releaseIssue.number}/comments`, {
@@ -42,13 +44,16 @@ fetch(`https://api.github.com/repos/${repo}/issues?state=all`, {
     } else {
       // If it doesn't exist, create a new issue
       const issueBody = `
-        Release Information:
-        - Author: ${actor}
-        - Release Date: ${new Date().toISOString().slice(0,10)}
-        - Version: ${version}
-        - Changelog: add info
+        ## Release Information
+        - Author: **${actor}**
+        - Release Date: **${new Date().toISOString().slice(0,10)}**
+        - Version: **${version}**
         - [Workflow Run](${workflowURL})
-       `;
+        - [Release Branch](${releaseBranchURL})
+
+        ### Changelog
+        _Add Changelog Here_
+      `;
 
       fetch(`https://api.github.com/repos/${repo}/issues`, {
         method: 'POST',
