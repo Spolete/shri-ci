@@ -5,7 +5,7 @@ on:
 
 jobs:
   build:
-    name: 'test'
+    name: 'build'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -20,5 +20,10 @@ jobs:
       - name: Install
         run: npm ci
 
+  test:
+    needs: build
+    name: 'test'
+    runs-on: ubuntu-latest
+    steps:
       - name: Run tests
         run: npm run test-ci
