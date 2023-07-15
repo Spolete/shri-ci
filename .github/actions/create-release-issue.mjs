@@ -45,16 +45,16 @@ fetch(`https://api.github.com/repos/${repo}/issues?state=all`, {
     } else {
       // If it doesn't exist, create a new issue
       const issueBody = `
-        ## Release Information
-        - Author: **${actor}**
-        - Release Date: **${new Date().toISOString().slice(0,10)}**
-        - Version: **${version}**
-        - [Workflow Run](${workflowURL})
-        - [Release Branch](${releaseBranchURL})
+## Release Information
+- Author: **${actor}**
+- Release Date: **${new Date().toISOString().slice(0,10)}**
+- Version: **${version}**
+- [Workflow Run](${workflowURL})
+- [Release Branch](${releaseBranchURL})
 
-        ### Changelog
-        ${changelog}
-      `;
+### Changelog
+${changelog}
+`;
 
       fetch(`https://api.github.com/repos/${repo}/issues`, {
         method: 'POST',
