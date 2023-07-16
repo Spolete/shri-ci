@@ -1,0 +1,43 @@
+name: Deploy
+
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  deploy:
+    name: 'deploy'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Check comment
+        id: check_comment
+        run: |
+          COMMENT_BODY="${{ github.event.comment.body }}"
+          ISSUE_TITLE="${{ github.event.issue.title }}"
+          if [[ "${COMMENT_BODY}" == *"Start deploy"* ]] && [[ "${ISSUE_TITLE}" == "RELEASE" ]]; then
+            echo "DEPLOY=true" >> $GITHUB_ENV
+          else
+            echo "DEPLOY=false" >> $GITHUB_ENV
+          fi
+
+      - name: Setup Node.js
+        if: env.DEPLOY == 'true'
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - name: Build
+        if: env.DEPLOY == 'true'
+        run: |
+          npm ci
+          npm run build
+
+      - name: Deploy
+        if: env.DEPLOY == 'true'
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./build
