@@ -24,7 +24,7 @@ fetch(`https://api.github.com/repos/${repo}/issues?state=open`, {
   .then(response => response.json())
   .then((issues) => {
     // Check if release issue already exists
-    const releaseIssue = issues.find(issue => issue.title === 'RELEASE' && issue.body.includes(`Version: ${version}`));
+    const releaseIssue = issues.find(issue => issue.title === 'RELEASE' && issue.body.includes(`Version: **${version}**`));
     if (releaseIssue) {
       // If it exists, add a comment
       const commentBody = `
