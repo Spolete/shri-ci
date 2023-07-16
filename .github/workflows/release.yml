@@ -57,5 +57,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: ${{ github.repository }}
-          ISSUE_NUMBER: ${{ steps.create_issue.outputs.issue_number }}
+          GITHUB_REF_NAME: ${{ github.ref_name }}
           TEST_RESULT: ${{ env.TEST_FAILED }}
