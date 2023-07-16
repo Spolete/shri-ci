@@ -14,10 +14,23 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Create Release Branch
+      - name: Check if Release Branch exists
+        id: check_branch
         run: |
-          git checkout -b release/${{ github.ref_name }} ${{ github.ref_name }}
-          git push origin release/${{ github.ref_name }}
+          if git show-ref --quiet refs/remotes/origin/release/${{ github.ref_name }}
+          then
+            echo "BRANCH_EXISTS=true" >> $GITHUB_ENV
+          fi
+
+      - name: Switch to existing Release Branch or Create new
+        run: |
+          if [ "${{ env.BRANCH_EXISTS }}" = "true" ]
+          then
+            git checkout release/${{ github.ref_name }}
+          else
+            git checkout -b release/${{ github.ref_name }} ${{ github.ref_name }}
+            git push origin release/${{ github.ref_name }}
+          fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
