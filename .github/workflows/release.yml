@@ -35,8 +35,8 @@ jobs:
         run: |
           PREV_TAG=$(git describe --abbrev=0 --tags `git rev-list --tags --skip=1 --max-count=1`)
           CHANGELOG=$(git log --pretty=format:"- %s" $PREV_TAG..HEAD)
-          CHANGELOG_JSON=$(node -e "console.log(JSON.stringify(process.argv[1].split('\n')))" "$CHANGELOG")
-          echo "CHANGELOG=$CHANGELOG_JSON" >> $GITHUB_ENV
+          CHANGELOG_BASE64=$(echo "$CHANGELOG" | base64)
+          echo "CHANGELOG_BASE64=$CHANGELOG_BASE64" >> $GITHUB_ENV
 
       - name: Create Release Issue
         run: node .github/actions/create-release-issue.mjs
