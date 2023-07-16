@@ -18,7 +18,7 @@ const headers = {
 };
 
 // Fetch all issues
-fetch(`https://api.github.com/repos/${repo}/issues?state=all`, {
+fetch(`https://api.github.com/repos/${repo}/issues?state=open`, {
   headers,
 })
   .then(response => response.json())

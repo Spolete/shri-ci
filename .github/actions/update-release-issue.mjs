@@ -11,7 +11,7 @@ const headers = {
   Accept: 'application/vnd.github.v3+json',
 };
 
-fetch(`https://api.github.com/repos/${repo}/issues?state=all`, {
+fetch(`https://api.github.com/repos/${repo}/issues?state=open`, {
   headers,
 })
   .then(response => response.json())
