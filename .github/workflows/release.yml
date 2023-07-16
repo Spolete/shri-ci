@@ -16,7 +16,7 @@ jobs:
 
       - name: Create Release Branch
         run: |
-          $ git checkout -b release/${{ github.ref_name }} ${{ github.ref_name }}
+          git checkout -b release/${{ github.ref_name }} ${{ github.ref_name }}
           git push origin release/${{ github.ref_name }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
