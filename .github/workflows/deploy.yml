@@ -48,7 +48,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: ${{ github.repository }}
-          GITHUB_REF_NAME: ${{ github.ref_name }}
+          GITHUB_ISSUE_NUMBER: ${{ github.event.issue.number }}
 
       - name: Close Issue
         if: env.DEPLOY == 'true' && success()
