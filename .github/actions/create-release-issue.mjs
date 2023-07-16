@@ -6,7 +6,7 @@ const repo = process.env.GITHUB_REPOSITORY;
 const actor = process.env.GITHUB_ACTOR;
 const version = process.env.GITHUB_REF_NAME;
 const runId = process.env.GITHUB_RUN_ID;
-const changelog = process.env.CHANGELOG;
+const changelog = JSON.parse(process.env.CHANGELOG);
 
 // The URL to the current workflow run
 const workflowURL = `https://github.com/${repo}/actions/runs/${runId}`;
