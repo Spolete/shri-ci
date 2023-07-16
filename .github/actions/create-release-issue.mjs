@@ -50,7 +50,7 @@ New run of workflow:
 - Release Date: **${new Date().toISOString().slice(0,10)}**
 - Version: **${version}**
 - [Workflow Run](${workflowURL})
-- [Release Branch](${releaseBranchURL})
+- Release Branch: [Release Branch](${releaseBranchURL})
 
 ### Changelog
 ${changelog}

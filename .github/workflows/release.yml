@@ -48,4 +48,14 @@ jobs:
           CHANGELOG: ${{ env.CHANGELOG }}
 
       - name: Run tests
-        run: npm run test-ci
+        id: tests
+        run: npm run test-ci || echo "TEST_FAILED=true" >> $GITHUB_ENV
+        continue-on-error: true
+
+      - name: Update Issue after tests
+        run: node .github/actions/update-release-issue.mjs
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          ISSUE_NUMBER: ${{ steps.create_issue.outputs.issue_number }}
+          TEST_RESULT: ${{ env.TEST_FAILED }}
