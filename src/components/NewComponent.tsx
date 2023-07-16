@@ -3,7 +3,7 @@ import React from 'react';
 const NewComponent = () => {
     return (
         <div>
-            Some text123
+            Some text1234
         </div>
     );
 };
