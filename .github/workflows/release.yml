@@ -34,9 +34,9 @@ jobs:
         id: changelog
         run: |
           PREV_TAG=$(git describe --abbrev=0 --tags `git rev-list --tags --skip=1 --max-count=1`)
-          CHANGELOG=$(git log --pretty=format:"- %s" $PREV_TAG..HEAD)
-          CHANGELOG_BASE64=$(echo "$CHANGELOG" | base64)
-          echo "CHANGELOG_BASE64=$CHANGELOG_BASE64" >> $GITHUB_ENV
+          LAST_TAG=$(git describe --abbrev=0 --tags `git rev-list --tags --max-count=1`)
+          CHANGELOG=$(git log --pretty="- %s" $PREV_TAG..$LAST_TAG | tr '\n' ';')
+          echo "CHANGELOG=$CHANGELOG" >> $GITHUB_ENV
 
       - name: Create Release Issue
         run: node .github/actions/create-release-issue.mjs
