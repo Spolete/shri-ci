@@ -28,10 +28,10 @@ fetch(`https://api.github.com/repos/${repo}/issues?state=all`, {
     if (releaseIssue) {
       // If it exists, add a comment
       const commentBody = `
-        New run of workflow:
-        - Author: **${actor}**
-        - [Workflow Run](${workflowURL})
-      `;
+New run of workflow:
+- Author: **${actor}**
+- [Workflow Run](${workflowURL})
+`;
       fetch(`https://api.github.com/repos/${repo}/issues/${releaseIssue.number}/comments`, {
         method: 'POST',
         headers,
